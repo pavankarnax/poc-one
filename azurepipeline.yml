@@ -1,0 +1,21 @@
+trigger:
+- master
+
+pool:
+vmImage: 'ubuntu-22.04'
+
+variables:
+buildConfiguration: 'Release'
+
+steps:
+- script: dotnet test
+  displayName: Run unit test
+
+-script: dotnet build --configuration $(buildConfiguration)
+ displayName: Build application
+
+-script: docker Build -t my-image:v1.0
+ displayName: Build image 
+
+-script: docker push my-image:v1.0
+ displayName: Push image 
